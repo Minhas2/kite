@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Hamza Kite Shop - Invoice</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+<div class="invoice-box">
+    <h1>Hamza Kite Shop</h1>
+    <div class="shop-info">
+        Sales & Purchase Invoice<br>
+        Phone: 0312-8770022
+    </div>
+
+    <p>
+        <strong>Customer Name:</strong>
+        <input type="text" id="customer" placeholder="Enter customer name">
+    </p>
+
+    <table>
+        <tr>
+            <th>Product</th>
+            <th>Cost Price (Rs)</th>
+            <th>Sale Price (Rs)</th>
+            <th>Quantity</th>
+            <th>Total (Rs)</th>
+        </tr>
+
+        <tr>
+            <td>
+                <select id="product" onchange="setProduct()">
+                    <option value="1tawa">Kite (1 Tawa)</option>
+                    <option value="1_5tawa">Kite (1.5 Tawa)</option>
+                </select>
+            </td>
+            <td><input type="number" id="cost" oninput="calculate()"></td>
+            <td><input type="number" id="sale" oninput="calculate()"></td>
+            <td><input type="number" id="qty" value="1" oninput="calculate()"></td>
+            <td><input type="number" id="total" readonly></td>
+        </tr>
+    </table>
+
+    <div class="total-box">
+        <p><strong>Total Amount:</strong> Rs <span id="grandTotal">0</span></p>
+        <p><strong>Profit:</strong> Rs <span id="profit">0</span></p>
+    </div>
+
+    <button class="btn" onclick="window.print()">Print Invoice</button>
+    <button class="btn" onclick="saveInvoice()">Save Invoice (Notepad)</button>
+
+    <div class="footer">
+        Thank you for doing business with Hamza Kite Shop
+    </div>
+</div>
+
+<script>
+function setProduct() {
+    const product = document.getElementById("product").value;
+
+    // Default prices (you can still edit manually)
+    if (product === "1tawa") {
+        document.getElementById("cost").value = 220;
+        document.getElementById("sale").value = 300;
+    } else {
+        document.getElementById("cost").value = 300;
+        document.getElementById("sale").value = 400;
+    }
+    calculate();
+}
+
+function calculate() {
+    const cost = Number(document.getElementById("cost").value) || 0;
+    const sale = Number(document.getElementById("sale").value) || 0;
+    const qty = Number(document.getElementById("qty").value) || 0;
+
+    const total = sale * qty;
+    const profit = (sale - cost) * qty;
+
+    document.getElementById("total").value = total;
+    document.getElementById("grandTotal").innerText = total;
+    document.getElementById("profit").innerText = profit;
+}
+
+function saveInvoice() {
+    const customer = document.getElementById("customer").value || "N/A";
+    const productSelect = document.getElementById("product");
+    const product = productSelect.options[productSelect.selectedIndex].text;
+    const cost = document.getElementById("cost").value || 0;
+    const sale = document.getElementById("sale").value || 0;
+    const qty = document.getElementById("qty").value || 0;
+    const total = document.getElementById("grandTotal").innerText;
+    const profit = document.getElementById("profit").innerText;
+    const date = new Date().toLocaleString();
+
+    const content =
+`Hamza Kite Shop
+----------------------------
+Customer Name: ${customer}
+Date: ${date}
+
+Product: ${product}
+Cost Price: Rs ${cost}
+Sale Price: Rs ${sale}
+Quantity: ${qty}
+
+Total Amount: Rs ${total}
+Profit: Rs ${profit}
+
+Thank you for your business!
+`;
+
+    const blob = new Blob([content], { type: "text/plain" });
+    const link = document.createElement("a");
+    link.href = URL.createObjectURL(blob);
+    link.download = `Invoice_${customer.replace(/\s+/g, "_")}.txt`;
+    link.click();
+}
+
+setProduct();
+</script>
+
+</body>
+</html>
