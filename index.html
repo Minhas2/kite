@@ -2,124 +2,129 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Hamza Kite Shop - Invoice</title>
+    <title>Invoice - Hamza Kite Shop</title>
     <link rel="stylesheet" href="style.css">
 </head>
-
 <body>
 
-<div class="invoice-box">
-    <h1>Hamza Kite Shop</h1>
-    <div class="shop-info">
-        Sales & Purchase Invoice<br>
-        Phone: 0312-8770022
-    </div>
+<div class="invoice">
+    <h1>INVOICE</h1>
 
-    <p>
-        <strong>Customer Name:</strong>
-        <input type="text" id="customer" placeholder="Enter customer name">
-    </p>
+    <div class="header">
+        <p>Invoice To: <input type="text" id="customer"></p>
+        <p>Date: <span id="date"></span></p>
+        <p>Invoice No: <input type="text"></p>
+    </div>
 
     <table>
-        <tr>
-            <th>Product</th>
-            <th>Cost Price (Rs)</th>
-            <th>Sale Price (Rs)</th>
-            <th>Quantity</th>
-            <th>Total (Rs)</th>
-        </tr>
+        <thead>
+            <tr>
+                <th>Description</th>
+                <th>Unit Pack</th>
+                <th>Rate (PKR)</th>
+                <th>Quantity</th>
+                <th>Total (PKR)</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>1 Tawa Gudda</td>
+                <td>-</td>
+                <td><input type="number" id="r1" oninput="calc()"></td>
+                <td><input type="number" id="q1" oninput="calc()"></td>
+                <td id="t1">0</td>
+            </tr>
 
-        <tr>
-            <td>
-                <select id="product" onchange="setProduct()">
-                    <option value="1tawa">Kite (1 Tawa)</option>
-                    <option value="1_5tawa">Kite (1.5 Tawa)</option>
-                </select>
-            </td>
-            <td><input type="number" id="cost" oninput="calculate()"></td>
-            <td><input type="number" id="sale" oninput="calculate()"></td>
-            <td><input type="number" id="qty" value="1" oninput="calculate()"></td>
-            <td><input type="number" id="total" readonly></td>
-        </tr>
+            <tr>
+                <td>1.5 Tawa Gudda</td>
+                <td>-</td>
+                <td><input type="number" id="r2" oninput="calc()"></td>
+                <td><input type="number" id="q2" oninput="calc()"></td>
+                <td id="t2">0</td>
+            </tr>
+
+            <tr>
+                <td>Pina</td>
+                <td><input type="text" id="unitPina" class="unit-pack" value="4 Units"></td>
+                <td><input type="number" id="r3" value="9500" oninput="calc()"></td>
+                <td><input type="number" id="q3" value="1" oninput="calc()"></td>
+                <td id="t3">9500</td>
+            </tr>
+        </tbody>
     </table>
 
-    <div class="total-box">
-        <p><strong>Total Amount:</strong> Rs <span id="grandTotal">0</span></p>
-        <p><strong>Profit:</strong> Rs <span id="profit">0</span></p>
+    <h2>Total Amount Payable: PKR <span id="grand">9500</span></h2>
+
+    <div class="bank">
+        <p><strong>Seller:</strong> Hamza Kite Shop</p>
+        <p><strong>Account Title:</strong> Hamza Jabran Minhas</p>
+        <p><strong>Bank:</strong> Bank Al Habib</p>
+        <p><strong>IBAN:</strong> PK93 BAHL 5522 0044 0046 0801 6</p>
     </div>
 
-    <button class="btn" onclick="window.print()">Print Invoice</button>
-    <button class="btn" onclick="saveInvoice()">Save Invoice (Notepad)</button>
+    <div class="signature">
+        Authorized Signature:<br>
+        Hamza Kite Shop
+    </div>
 
-    <div class="footer">
-        Thank you for doing business with Hamza Kite Shop
+    <div class="buttons">
+        <button onclick="window.print()">Print</button>
+        <button onclick="saveInvoice()">Save (Notepad)</button>
     </div>
 </div>
 
 <script>
-function setProduct() {
-    const product = document.getElementById("product").value;
+document.getElementById("date").innerText = new Date().toLocaleDateString();
 
-    // Default prices (you can still edit manually)
-    if (product === "1tawa") {
-        document.getElementById("cost").value = 220;
-        document.getElementById("sale").value = 300;
-    } else {
-        document.getElementById("cost").value = 300;
-        document.getElementById("sale").value = 400;
-    }
-    calculate();
-}
+function calc() {
+    const t1 = (r1.value || 0) * (q1.value || 0);
+    const t2 = (r2.value || 0) * (q2.value || 0);
+    const t3 = (r3.value || 0) * (q3.value || 0);
 
-function calculate() {
-    const cost = Number(document.getElementById("cost").value) || 0;
-    const sale = Number(document.getElementById("sale").value) || 0;
-    const qty = Number(document.getElementById("qty").value) || 0;
+    document.getElementById("t1").innerText = t1;
+    document.getElementById("t2").innerText = t2;
+    document.getElementById("t3").innerText = t3;
 
-    const total = sale * qty;
-    const profit = (sale - cost) * qty;
-
-    document.getElementById("total").value = total;
-    document.getElementById("grandTotal").innerText = total;
-    document.getElementById("profit").innerText = profit;
+    document.getElementById("grand").innerText = t1 + t2 + t3;
 }
 
 function saveInvoice() {
-    const customer = document.getElementById("customer").value || "N/A";
-    const productSelect = document.getElementById("product");
-    const product = productSelect.options[productSelect.selectedIndex].text;
-    const cost = document.getElementById("cost").value || 0;
-    const sale = document.getElementById("sale").value || 0;
-    const qty = document.getElementById("qty").value || 0;
-    const total = document.getElementById("grandTotal").innerText;
-    const profit = document.getElementById("profit").innerText;
-    const date = new Date().toLocaleString();
+    const text =
+`INVOICE - Hamza Kite Shop
+-------------------------
+Invoice To: ${customer.value || "N/A"}
+Date: ${new Date().toLocaleString()}
 
-    const content =
-`Hamza Kite Shop
-----------------------------
-Customer Name: ${customer}
-Date: ${date}
+1 Tawa Gudda
+Rate: ${r1.value || 0}
+Qty: ${q1.value || 0}
+Total: ${t1.innerText}
 
-Product: ${product}
-Cost Price: Rs ${cost}
-Sale Price: Rs ${sale}
-Quantity: ${qty}
+1.5 Tawa Gudda
+Rate: ${r2.value || 0}
+Qty: ${q2.value || 0}
+Total: ${t2.innerText}
 
-Total Amount: Rs ${total}
-Profit: Rs ${profit}
+Pina
+Unit Pack: ${unitPina.value}
+Rate: ${r3.value}
+Qty: ${q3.value}
+Total: ${t3.innerText}
 
-Thank you for your business!
+-------------------------
+Total Payable: PKR ${grand.innerText}
+
+Seller: Hamza Kite Shop
 `;
 
-    const blob = new Blob([content], { type: "text/plain" });
+    const blob = new Blob([text], { type: "text/plain" });
     const link = document.createElement("a");
     link.href = URL.createObjectURL(blob);
-    link.download = `Invoice_${customer.replace(/\s+/g, "_")}.txt`;
+    link.download = "invoice.txt";
     link.click();
 }
 
-setProduct();
+calc();
 </script>
 
 </body>
