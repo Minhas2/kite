@@ -11,14 +11,16 @@ body {
 
 h1 {
     text-align: center;
+    font-weight: bold;
+}
+
+/* Header bold */
+.header {
+    font-weight: bold;
 }
 
 .header p {
     margin: 4px 0;
-}
-
-.header {
-    font-weight: bold;
 }
 
 input {
@@ -28,6 +30,7 @@ input {
     width: 100%;
     text-align: left;
 }
+
 
 table {
     width: 100%;
@@ -43,10 +46,12 @@ th, td {
 
 th {
     background: #ddd;
+    font-weight: bold;
 }
 
 h2 {
     margin-top: 20px;
+    font-weight: bold;
 }
 
 .bank {
@@ -55,6 +60,7 @@ h2 {
 
 .signature {
     margin-top: 40px;
+    font-weight: bold;
 }
 
 .buttons {
@@ -64,14 +70,6 @@ h2 {
 button {
     padding: 8px 14px;
     cursor: pointer;
-}
-
-/* ✅ Makes ONLY Pina Unit Pack editable & visible */
-.unit-pack {
-    border: 1px solid black !important;
-    padding: 4px;
-    cursor: text;
-    width: 90%;
 }
 
 @media print {

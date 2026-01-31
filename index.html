@@ -11,16 +11,15 @@
     <h1>INVOICE</h1>
 
     <div class="header">
-        <p>Invoice To: <input type="text" id="customer" style="font-weight: bold;"></p>
+        <p>Invoice To: <input type="text" id="customer"></p>
         <p>Date: <span id="date"></span></p>
-        <p>Invoice No: <input type="text" style="font-weight: bold;"></p>
+        <p>Invoice No: <input type="text"></p>
     </div>
 
     <table>
         <thead>
             <tr>
                 <th>Description</th>
-                <th>Unit Pack</th>
                 <th>Rate (PKR)</th>
                 <th>Quantity</th>
                 <th>Total (PKR)</th>
@@ -29,7 +28,6 @@
         <tbody>
             <tr>
                 <td>1 Tawa Gudda</td>
-                <td>-</td>
                 <td><input type="number" id="r1" oninput="calc()"></td>
                 <td><input type="number" id="q1" oninput="calc()"></td>
                 <td id="t1">0</td>
@@ -37,7 +35,6 @@
 
             <tr>
                 <td>1.5 Tawa Gudda</td>
-                <td>-</td>
                 <td><input type="number" id="r2" oninput="calc()"></td>
                 <td><input type="number" id="q2" oninput="calc()"></td>
                 <td id="t2">0</td>
@@ -45,9 +42,8 @@
 
             <tr>
                 <td>Pina</td>
-                <td><input type="text" id="unitPina" class="unit-pack" value="1 Units"></td>
                 <td><input type="number" id="r3" value="9500" oninput="calc()"></td>
-                <td><input type="number" id="q3" value="0" oninput="calc()"></td>
+                <td><input type="number" id="q3" value="1" oninput="calc()"></td>
                 <td id="t3">9500</td>
             </tr>
         </tbody>
@@ -106,7 +102,6 @@ Qty: ${q2.value || 0}
 Total: ${t2.innerText}
 
 Pina
-Unit Pack: ${unitPina.value}
 Rate: ${r3.value}
 Qty: ${q3.value}
 Total: ${t3.innerText}
