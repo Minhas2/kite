@@ -13,7 +13,7 @@
     <div class="header">
         <p>Invoice To: <input type="text" id="customer"></p>
         <p>Date: <span id="date"></span></p>
-        <p>Invoice No: <input type="text"></p>
+        <p>Invoice No: <input type="text" id="invoiceNo"></p>
     </div>
 
     <table>
@@ -25,6 +25,7 @@
                 <th>Total (PKR)</th>
             </tr>
         </thead>
+
         <tbody>
             <tr>
                 <td>1 Tawa Gudda</td>
@@ -40,12 +41,29 @@
                 <td id="t2">0</td>
             </tr>
 
+         
+
             <tr>
+                <td>Pari</td>
+                <td><input type="number" id="r4" oninput="calc()"></td>
+                <td><input type="number" id="q4" oninput="calc()"></td>
+                <td id="t4">0</td>
+            </tr>
+
+            <tr>
+                <td>White Tawa</td>
+                <td><input type="number" id="r5" oninput="calc()"></td>
+                <td><input type="number" id="q5" oninput="calc()"></td>
+                <td id="t5">0</td>
+            </tr>
+
+               <tr>
                 <td>Pina</td>
                 <td><input type="number" id="r3" value="9500" oninput="calc()"></td>
                 <td><input type="number" id="q3" value="1" oninput="calc()"></td>
                 <td id="t3">9500</td>
             </tr>
+            
         </tbody>
     </table>
 
@@ -76,12 +94,16 @@ function calc() {
     const t1 = (r1.value || 0) * (q1.value || 0);
     const t2 = (r2.value || 0) * (q2.value || 0);
     const t3 = (r3.value || 0) * (q3.value || 0);
+    const t4 = (r4.value || 0) * (q4.value || 0);
+    const t5 = (r5.value || 0) * (q5.value || 0);
 
     document.getElementById("t1").innerText = t1;
     document.getElementById("t2").innerText = t2;
     document.getElementById("t3").innerText = t3;
+    document.getElementById("t4").innerText = t4;
+    document.getElementById("t5").innerText = t5;
 
-    document.getElementById("grand").innerText = t1 + t2 + t3;
+    document.getElementById("grand").innerText = t1 + t2 + t3 + t4 + t5;
 }
 
 function saveInvoice() {
@@ -89,6 +111,7 @@ function saveInvoice() {
 `INVOICE - Hamza Kite Shop
 -------------------------
 Invoice To: ${customer.value || "N/A"}
+Invoice No: ${invoiceNo.value || "N/A"}
 Date: ${new Date().toLocaleString()}
 
 1 Tawa Gudda
@@ -102,9 +125,19 @@ Qty: ${q2.value || 0}
 Total: ${t2.innerText}
 
 Pina
-Rate: ${r3.value}
-Qty: ${q3.value}
+Rate: ${r3.value || 0}
+Qty: ${q3.value || 0}
 Total: ${t3.innerText}
+
+Pari
+Rate: ${r4.value || 0}
+Qty: ${q4.value || 0}
+Total: ${t4.innerText}
+
+White Tawa
+Rate: ${r5.value || 0}
+Qty: ${q5.value || 0}
+Total: ${t5.innerText}
 
 -------------------------
 Total Payable: PKR ${grand.innerText}
